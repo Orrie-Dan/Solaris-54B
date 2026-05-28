@@ -1,7 +1,8 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { revealUp, staggerContainer, viewportOnce } from "../components/motion";
+import ScrollReveal from "../components/ScrollReveal";
+import { contentFade, revealUp } from "../components/motion";
 import Seo from "../components/Seo";
 import { useI18n } from "../i18n";
 
@@ -16,13 +17,7 @@ export default function SSIT({ embedded = false, sectionId }) {
     <>
       {!embedded && <Seo title={t.ssitPage.title} description={t.ssitPage.description} path="/ssit" />}
       <section id={sectionId} className="section ssit-section">
-        <motion.div
-          className="container ssit-container"
-          initial={reduceMotion ? false : "hidden"}
-          whileInView={reduceMotion ? undefined : "visible"}
-          viewport={viewportOnce}
-          variants={staggerContainer}
-        >
+        <ScrollReveal className="container ssit-container">
           <motion.div className="ssit-intro" variants={revealUp}>
             <p className="eyebrow">{t.ssitPage.platformEyebrow}</p>
             <p className="ssit-platform-tag">{t.ssitPage.platformSubheading}</p>
@@ -55,13 +50,14 @@ export default function SSIT({ embedded = false, sectionId }) {
               })}
             </div>
 
+            <AnimatePresence mode="wait" initial={false}>
             <motion.article
               key={activeCapability.title}
               className="ssit-split-panel"
               role="tabpanel"
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              initial={reduceMotion ? false : contentFade.initial}
+              animate={reduceMotion ? undefined : contentFade.animate}
+              exit={reduceMotion ? undefined : contentFade.exit}
             >
               <p className="tag">{activeCapability.tag}</p>
               <h2>{activeCapability.title}</h2>
@@ -81,13 +77,14 @@ export default function SSIT({ embedded = false, sectionId }) {
                 {t.ssitPage.ctaButton} →
               </Link>
             </motion.article>
+            </AnimatePresence>
           </motion.div>
           <motion.div className="ssit-cta-band" variants={revealUp}>
             <h3>{t.ssitPage.ctaTitle}</h3>
             <p className="meta">{t.ssitPage.ctaLead}</p>
             <Link className="btn btn-primary" to={contactPath}>{t.ssitPage.ctaButton}</Link>
           </motion.div>
-        </motion.div>
+        </ScrollReveal>
       </section>
     </>
   );

@@ -6,9 +6,12 @@ export const translations = {
   en: {
     nav: {
       home: "Home",
+      about: "About",
       solutions: "Solutions",
       ssit: "SSIT",
       markets: "Markets",
+      why: "Why Solaris 54",
+      approach: "Approach",
       group: "Group",
       contact: "Contact",
       cta: "Get in Touch",
@@ -33,17 +36,43 @@ export const translations = {
       viewDetail: "View detail",
       poweredBySsit: "Powered by SSIT™",
       ssitLayer: "SSIT Layer",
+      contactEyebrow: "Contact Solaris 54",
+      loadingMap: "Loading map...",
+      mapUnavailable: "Map unavailable right now.",
+      footerRights: "All rights reserved.",
+      languageToggleAria: "Language toggle",
+      switchToEnglishAria: "Switch to English",
+      switchToFrenchAria: "Switch to French",
+      navMainAria: "Main navigation",
+      menuToggleAria: "Toggle navigation menu",
+      mapHighlightPrefix: "Map highlighting",
+      heroMetrics: [
+        { value: "54", label: "African nations in our mandate" },
+        { value: "Global", label: "Active target markets" },
+        { value: "7", label: "Solution verticals" },
+      ],
+      ticker: [
+        "C&I Rooftop Solar",
+        "Hybrid Mini-Grids",
+        "Industrial & Commercial Smart Buildings",
+        "Data Centre Energy Infrastructure",
+        "Solar + BESS for Telecom Towers",
+        "Agro-Solar Projects",
+        "Rural Electrification & Solar Home Systems",
+      ],
     },
     seo: {
       siteName: "Solaris 54",
       image: "/og-solaris54.jpg",
     },
     home: {
-      title: "Solaris 54 - Clean Energy Infrastructure Worldwide",
-      description: "Developer-led clean energy infrastructure across emerging markets.",
-      eyebrow: "Clean Energy Infrastructure Worldwide",
-      headline: "Developer-led energy infrastructure for governments, utilities, and enterprise clients.",
-      lead: "Originate. Finance. Build. Operate. Solaris 54 delivers full-lifecycle clean energy infrastructure across global emerging markets.",
+      title: "Solaris 54 - Clean Energy Infrastructure for a Changing World",
+      description:
+        "Solar energy, smart infrastructure, hybrid power systems, and distributed electrification across global emerging markets.",
+      eyebrow: "Clean Energy Infrastructure",
+      headline: "Clean energy infrastructure for a changing world.",
+      lead:
+        "Solaris 54 develops and deploys solar energy, smart infrastructure, hybrid power systems, and distributed electrification for governments, utilities, industries, and communities across global emerging markets.",
       proof: [
         "Backed by Mark Cables FZE",
         "Abidjan HQ, Global Reach",
@@ -51,6 +80,75 @@ export const translations = {
       ],
       solutionsTitle: "Solutions Portfolio",
       ctaTitle: "Ready to structure your next energy project?",
+    },
+    aboutPage: {
+      eyebrow: "Who We Are",
+      heading: "Accelerating the clean energy transition.",
+      lead:
+        "Solaris 54 is a forward-looking energy company focused on delivering innovative, reliable, and sustainable power solutions across global emerging markets.",
+      body:
+        "Headquartered in Abidjan, Cote d'Ivoire, and backed by Mark Cables FZE, Solaris 54 develops, finances, builds, and operates clean energy infrastructure for governments, utilities, businesses, and communities.",
+      quote:
+        "Reliable energy infrastructure is the foundation of economic growth, industrial resilience, and long-term development.",
+      stats: [
+        { value: "54", label: "African nations in our mandate" },
+        { value: "7", label: "Core solution verticals" },
+        { value: "100%", label: "Clean and renewable energy focus" },
+        { value: "24/7", label: "Asset operations and support" },
+        { value: "$1BN+", label: "Group-level awarded projects" },
+      ],
+    },
+    whyPage: {
+      eyebrow: "Why Solaris 54",
+      heading: "The right partner for clean energy.",
+      lead:
+        "We are not just a supplier. We originate, finance, build, and operate from first feasibility through long-term performance.",
+      cards: [
+        {
+          title: "Developer-Led",
+          body: "We originate, structure, finance and operate - full lifecycle from concept to commissioning and long-term performance guarantee.",
+        },
+        {
+          title: "Technology-First",
+          body: "SSIT layer - AI, IoT, BEMS, smart grid - is built into every project, not added afterwards.",
+        },
+        {
+          title: "Group Backing",
+          body: "Part of Mark Cables FZE group with a 400MW HFO power plant under construction and $1BN+ awarded projects globally.",
+        },
+        {
+          title: "Local Roots, Global Reach",
+          body: "Headquartered in Abidjan with global operational reach and international standards.",
+        },
+      ],
+    },
+    approachPage: {
+      eyebrow: "How We Work",
+      heading: "From vision to voltage.",
+      lead:
+        "A disciplined process from feasibility to long-term operations and performance management.",
+      steps: [
+        {
+          title: "Assess",
+          body: "Site assessment, resource analysis, load profiling and feasibility study.",
+        },
+        {
+          title: "Design",
+          body: "Technical design, system sizing, and SSIT integration to IEC, IEEE and local code standards.",
+        },
+        {
+          title: "Finance",
+          body: "Project finance, PPA structuring and DFI engagement to reduce client capital risk.",
+        },
+        {
+          title: "Build",
+          body: "EPC execution to international standards with quality-controlled procurement and commissioning.",
+        },
+        {
+          title: "Operate",
+          body: "Long-term O&M, SSIT remote monitoring, preventive maintenance and performance guarantees.",
+        },
+      ],
     },
     solutionsPage: {
       title: "Solutions | Solaris 54",
@@ -61,12 +159,12 @@ export const translations = {
     ssitPage: {
       title: "SSIT Platform | Solaris 54",
       description: "Smart Solar Intelligent Technology capabilities and architecture.",
-      heading: "Smart Solar Intelligent Technology",
+      heading: "SSIT Platform",
       lead: "SSIT is the digital backbone embedded across every Solaris 54 project and service.",
       platformEyebrow: "Smart Energy Intelligence",
       platformSubheading: "Powered by SSIT™",
       platformLead:
-        "SSIT is Solaris 54's proprietary smart infrastructure platform connecting AI, IoT, automation, and energy analytics into one operating system for modern energy ecosystems.",
+        "SSIT is Solaris 54's proprietary platform that unifies AI, IoT, automation, and energy analytics into one operating layer.",
       liveStatusTitle: "Live Grid Status",
       liveStatusValue: "AI Dispatch Active",
       liveMetrics: [
@@ -186,9 +284,12 @@ export const translations = {
   fr: {
     nav: {
       home: "Accueil",
+      about: "A propos",
       solutions: "Solutions",
       ssit: "SSIT",
       markets: "Marches",
+      why: "Pourquoi Solaris 54",
+      approach: "Approche",
       group: "Groupe",
       contact: "Contact",
       cta: "Contactez-nous",
@@ -213,17 +314,43 @@ export const translations = {
       viewDetail: "Voir le detail",
       poweredBySsit: "Propulse par SSIT™",
       ssitLayer: "Couche SSIT",
+      contactEyebrow: "Contacter Solaris 54",
+      loadingMap: "Chargement de la carte...",
+      mapUnavailable: "Carte indisponible pour le moment.",
+      footerRights: "Tous droits reserves.",
+      languageToggleAria: "Basculer la langue",
+      switchToEnglishAria: "Passer en anglais",
+      switchToFrenchAria: "Passer en francais",
+      navMainAria: "Navigation principale",
+      menuToggleAria: "Afficher le menu de navigation",
+      mapHighlightPrefix: "Carte mettant en valeur",
+      heroMetrics: [
+        { value: "54", label: "Nations africaines dans notre mandat" },
+        { value: "Mondial", label: "Marches cibles actifs" },
+        { value: "7", label: "Verticales de solution" },
+      ],
+      ticker: [
+        "Solaire toiture C&I",
+        "Mini-reseaux hybrides",
+        "Batiments intelligents C&I",
+        "Infrastructure energetique data centre",
+        "Solaire + BESS pour tours telecom",
+        "Projets agro-solaires",
+        "Electrification rurale et systemes solaires domestiques",
+      ],
     },
     seo: {
       siteName: "Solaris 54",
       image: "/og-solaris54.jpg",
     },
     home: {
-      title: "Solaris 54 - Infrastructure energetique propre mondiale",
-      description: "Infrastructure energetique propre pilotee par developpeur dans les marches emergents.",
-      eyebrow: "Infrastructure energetique propre mondiale",
-      headline: "Infrastructure energetique pilotee par un developpeur pour gouvernements, utilites et clients entreprise.",
-      lead: "Originer. Financer. Construire. Exploiter. Solaris 54 fournit une infrastructure energetique propre sur tout le cycle de vie dans les marches emergents mondiaux.",
+      title: "Solaris 54 - Infrastructure energetique propre pour un monde en evolution",
+      description:
+        "Energie solaire, infrastructure intelligente, systemes hybrides et electrification distribuee dans les marches emergents mondiaux.",
+      eyebrow: "Infrastructure energetique propre",
+      headline: "Infrastructure energetique propre pour un monde en evolution.",
+      lead:
+        "Solaris 54 developpe et deploie l'energie solaire, l'infrastructure intelligente, les systemes hybrides et l'electrification distribuee pour les gouvernements, les utilites, les industries et les communautes dans les marches emergents mondiaux.",
       proof: [
         "Soutenu par Mark Cables FZE",
         "Siege a Abidjan, portee mondiale",
@@ -231,6 +358,75 @@ export const translations = {
       ],
       solutionsTitle: "Portefeuille de solutions",
       ctaTitle: "Pret a structurer votre prochain projet energetique ?",
+    },
+    aboutPage: {
+      eyebrow: "Qui nous sommes",
+      heading: "Accelerer la transition vers l'energie propre.",
+      lead:
+        "Solaris 54 est une entreprise energetique tournee vers l'avenir, axee sur des solutions fiables, innovantes et durables dans les marches emergents mondiaux.",
+      body:
+        "Basee a Abidjan, Cote d'Ivoire, et soutenue par Mark Cables FZE, Solaris 54 developpe, finance, construit et exploite des infrastructures energetiques propres.",
+      quote:
+        "Une infrastructure energetique fiable est la base de la croissance economique, de la resilience industrielle et du developpement durable.",
+      stats: [
+        { value: "54", label: "Nations africaines dans notre mandat" },
+        { value: "7", label: "Verticales de solutions principales" },
+        { value: "100%", label: "Focus sur l'energie propre et renouvelable" },
+        { value: "24/7", label: "Operations et support des actifs" },
+        { value: "$1BN+", label: "Projets attribues au niveau du groupe" },
+      ],
+    },
+    whyPage: {
+      eyebrow: "Pourquoi Solaris 54",
+      heading: "Le bon partenaire pour l'energie propre.",
+      lead:
+        "Nous ne sommes pas seulement un fournisseur. Nous originons, finançons, construisons et exploitons sur tout le cycle.",
+      cards: [
+        {
+          title: "Developpeur integre",
+          body: "Nous originons, structurons, finançons et exploitons - du concept a la mise en service et a la performance long terme.",
+        },
+        {
+          title: "Technologie d'abord",
+          body: "La couche SSIT - IA, IoT, BEMS, reseau intelligent - est integree a chaque projet.",
+        },
+        {
+          title: "Force du groupe",
+          body: "Partie du groupe Mark Cables FZE avec une centrale HFO 400MW en construction et plus de 1 milliard USD de projets attribues.",
+        },
+        {
+          title: "Racines locales, portee mondiale",
+          body: "Siege a Abidjan avec une portee operationnelle mondiale et des standards internationaux.",
+        },
+      ],
+    },
+    approachPage: {
+      eyebrow: "Comment nous operons",
+      heading: "De la vision a la tension.",
+      lead:
+        "Un processus discipline, de la faisabilite a l'exploitation long terme et la gestion de performance.",
+      steps: [
+        {
+          title: "Evaluer",
+          body: "Evaluation du site, analyse des ressources, profil de charge et etude de faisabilite.",
+        },
+        {
+          title: "Concevoir",
+          body: "Conception technique, dimensionnement et integration SSIT selon IEC, IEEE et codes locaux.",
+        },
+        {
+          title: "Financer",
+          body: "Financement de projet, structuration PPA et engagement DFI pour reduire le risque client.",
+        },
+        {
+          title: "Construire",
+          body: "Execution EPC aux standards internationaux avec approvisionnement controle et mise en service.",
+        },
+        {
+          title: "Exploiter",
+          body: "O&M long terme, supervision SSIT, maintenance preventive et garanties de performance.",
+        },
+      ],
     },
     solutionsPage: {
       title: "Solutions | Solaris 54",

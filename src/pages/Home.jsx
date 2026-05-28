@@ -1,12 +1,16 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { revealUp, staggerContainer, viewportOnce } from "../components/motion";
+import { heroStagger, revealUp } from "../components/motion";
 import Seo from "../components/Seo";
+import About from "./About";
+import Approach from "./Approach";
 import Contact from "./Contact";
 import Group from "./Group";
 import Markets from "./Markets";
 import Solutions from "./Solutions";
 import SSIT from "./SSIT";
+import Ticker from "./Ticker";
+import Why from "./Why";
 import { useI18n } from "../i18n";
 
 export default function Home() {
@@ -24,9 +28,8 @@ export default function Home() {
         <motion.div
           className="container"
           initial={reduceMotion ? false : "hidden"}
-          whileInView={reduceMotion ? undefined : "visible"}
-          viewport={viewportOnce}
-          variants={staggerContainer}
+          animate={reduceMotion ? undefined : "visible"}
+          variants={heroStagger}
         >
           <motion.p className="eyebrow" variants={revealUp}>
             {t.home.eyebrow}
@@ -45,27 +48,24 @@ export default function Home() {
               {t.nav.solutions}
             </Link>
           </motion.div>
+          <motion.div className="hero-metrics" variants={revealUp}>
+            {t.common.heroMetrics.map((item) => (
+              <div key={`${item.value}-${item.label}`}>
+                <div className="hm-num">{item.value}</div>
+                <div className="hm-label">{item.label}</div>
+              </div>
+            ))}
+          </motion.div>
         </motion.div>
       </section>
 
-      <motion.section
-        className="section"
-        initial={reduceMotion ? false : "hidden"}
-        whileInView={reduceMotion ? undefined : "visible"}
-        viewport={viewportOnce}
-        variants={revealUp}
-      >
-        <div className="container proof-strip">
-          <div>{t.home.proof[0]}</div>
-          <div>{t.home.proof[1]}</div>
-          <div>{t.home.proof[2]}</div>
-          <div>{t.common.responseSla}</div>
-        </div>
-      </motion.section>
-
+      <Ticker />
+      <About sectionId="about" />
       <Solutions embedded sectionId="solutions" />
-      <SSIT embedded sectionId="ssit" />
+      <SSIT embedded sectionId="smart" />
       <Markets embedded sectionId="markets" />
+      <Why sectionId="why" />
+      <Approach sectionId="approach" />
       <Group embedded sectionId="group" />
       <Contact embedded sectionId="contact" />
     </>

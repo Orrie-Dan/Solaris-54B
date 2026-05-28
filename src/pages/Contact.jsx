@@ -1,16 +1,17 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { revealUp, staggerContainer, viewportOnce } from "../components/motion";
+import ScrollReveal from "../components/ScrollReveal";
+import { revealCard, revealUp } from "../components/motion";
 import Seo from "../components/Seo";
 import { useI18n } from "../i18n";
 
 export default function Contact({ embedded = false, sectionId }) {
   const { t } = useI18n();
   const [status, setStatus] = useState("");
-  const reduceMotion = useReducedMotion();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+    setStatus("");
     const form = new FormData(event.currentTarget);
     let valid = true;
     for (const key of ["firstName", "lastName", "organisation", "email", "country", "interest", "message"]) {
@@ -18,26 +19,37 @@ export default function Contact({ embedded = false, sectionId }) {
         valid = false;
       }
     }
-    setStatus(
-      valid
-        ? t.contactPage.success
-        : t.contactPage.error,
-    );
+    if (!valid) {
+      setStatus(t.contactPage.error);
+      return;
+    }
+
+    const payload = Object.fromEntries(form.entries());
+    const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT;
+    if (!endpoint) {
+      setStatus(t.contactPage.success);
+      return;
+    }
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      setStatus(response.ok ? t.contactPage.success : t.contactPage.error);
+    } catch {
+      setStatus(t.contactPage.error);
+    }
   }
 
   return (
     <>
       {!embedded && <Seo title={t.contactPage.title} description={t.contactPage.description} path="/contact" />}
       <section id={sectionId} className="section contact-section">
-        <motion.div
-          className="container contact-layout contact-layout-premium"
-          initial={reduceMotion ? false : "hidden"}
-          whileInView={reduceMotion ? undefined : "visible"}
-          viewport={viewportOnce}
-          variants={staggerContainer}
-        >
+        <ScrollReveal className="container contact-layout contact-layout-premium">
           <motion.div className="contact-panel contact-panel-info" variants={revealUp}>
-            <p className="eyebrow">Contact Solaris 54</p>
+            <p className="eyebrow">{t.common.contactEyebrow}</p>
             <h2>{t.nav.contact}</h2>
             <p className="lead">{t.contactPage.lead}</p>
             <a href="mailto:info@solaris54.com" className="contact-email">
@@ -50,7 +62,7 @@ export default function Contact({ embedded = false, sectionId }) {
               <li>{t.contactPage.steps[1]}</li>
             </ul>
           </motion.div>
-          <motion.form className="card form contact-panel contact-form-card" onSubmit={handleSubmit} variants={revealUp}>
+          <motion.form className="card form contact-panel contact-form-card" onSubmit={handleSubmit} variants={revealCard}>
             <input name="firstName" placeholder={t.contactPage.placeholders.firstName} required />
             <input name="lastName" placeholder={t.contactPage.placeholders.lastName} required />
             <input name="organisation" placeholder={t.contactPage.placeholders.organisation} required />
@@ -72,7 +84,7 @@ export default function Contact({ embedded = false, sectionId }) {
               {status}
             </p>
           </motion.form>
-        </motion.div>
+        </ScrollReveal>
       </section>
     </>
   );

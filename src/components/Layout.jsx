@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useI18n } from "../i18n";
 
 function LanguageToggle() {
   const { lang, setLang, t } = useI18n();
   return (
-    <div className="lang-wrap" role="group" aria-label="Language toggle">
-      <button className={`lang-btn ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} aria-label="Switch to English">
+    <div className="lang-wrap" role="group" aria-label={t.common.languageToggleAria}>
+      <button className={`lang-btn ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} aria-label={t.common.switchToEnglishAria}>
         {t.common.languageEn}
       </button>
-      <button className={`lang-btn ${lang === "fr" ? "active" : ""}`} onClick={() => setLang("fr")} aria-label="Passer en francais">
+      <button className={`lang-btn ${lang === "fr" ? "active" : ""}`} onClick={() => setLang("fr")} aria-label={t.common.switchToFrenchAria}>
         {t.common.languageFr}
       </button>
     </div>
@@ -20,9 +20,16 @@ function LanguageToggle() {
 export default function Layout({ children }) {
   const { t } = useI18n();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const location = useLocation();
   const navigate = useNavigate();
+  const { scrollYProgress } = useScroll();
+  const scrollProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 28,
+    restDelta: 0.001,
+  });
 
   function scrollToSection(sectionId, behavior = "smooth") {
     const target = document.getElementById(sectionId);
@@ -34,6 +41,7 @@ export default function Layout({ children }) {
 
   function handleSectionNav(event, sectionId) {
     event.preventDefault();
+    setMenuOpen(false);
     if (location.pathname !== "/") {
       navigate(`/#${sectionId}`);
       return;
@@ -44,6 +52,7 @@ export default function Layout({ children }) {
 
   function handleHomeNav(event) {
     event.preventDefault();
+    setMenuOpen(false);
     navigate("/");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -68,6 +77,13 @@ export default function Layout({ children }) {
 
   return (
     <div className="app-shell">
+      {!reduceMotion && (
+        <motion.div
+          className="scroll-progress"
+          style={{ scaleX: scrollProgress }}
+          aria-hidden="true"
+        />
+      )}
       <motion.header
         className={`topbar ${isScrolled ? "scrolled" : ""}`}
         animate={
@@ -84,21 +100,38 @@ export default function Layout({ children }) {
         <Link to="/" className="brand" onClick={handleHomeNav}>
           SOLARIS <span>54</span>
         </Link>
-        <nav className="nav-links" aria-label="Main navigation">
+        <nav className="nav-links" aria-label={t.common.navMainAria}>
           <Link to="/" onClick={handleHomeNav}>{t.nav.home}</Link>
+          <Link to="/#about" onClick={(event) => handleSectionNav(event, "about")}>{t.nav.about}</Link>
           <Link to="/#solutions" onClick={(event) => handleSectionNav(event, "solutions")}>{t.nav.solutions}</Link>
-          <Link to="/#ssit" onClick={(event) => handleSectionNav(event, "ssit")}>{t.nav.ssit}</Link>
+          <Link to="/#smart" onClick={(event) => handleSectionNav(event, "smart")}>{t.nav.ssit}</Link>
           <Link to="/#markets" onClick={(event) => handleSectionNav(event, "markets")}>{t.nav.markets}</Link>
+          <Link to="/#why" onClick={(event) => handleSectionNav(event, "why")}>{t.nav.why}</Link>
+          <Link to="/#approach" onClick={(event) => handleSectionNav(event, "approach")}>{t.nav.approach}</Link>
           <Link to="/#group" onClick={(event) => handleSectionNav(event, "group")}>{t.nav.group}</Link>
           <Link to="/#contact" onClick={(event) => handleSectionNav(event, "contact")}>{t.nav.contact}</Link>
         </nav>
         <div className="topbar-right">
+          <button className="menu-toggle" type="button" onClick={() => setMenuOpen((prev) => !prev)} aria-label={t.common.menuToggleAria}>
+            ☰
+          </button>
           <LanguageToggle />
           <Link to="/#contact" className="btn btn-primary" onClick={(event) => handleSectionNav(event, "contact")}>
             {t.nav.cta}
           </Link>
         </div>
       </motion.header>
+      <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+        <Link to="/" onClick={handleHomeNav}>{t.nav.home}</Link>
+        <Link to="/#about" onClick={(event) => handleSectionNav(event, "about")}>{t.nav.about}</Link>
+        <Link to="/#solutions" onClick={(event) => handleSectionNav(event, "solutions")}>{t.nav.solutions}</Link>
+        <Link to="/#smart" onClick={(event) => handleSectionNav(event, "smart")}>{t.nav.ssit}</Link>
+        <Link to="/#markets" onClick={(event) => handleSectionNav(event, "markets")}>{t.nav.markets}</Link>
+        <Link to="/#why" onClick={(event) => handleSectionNav(event, "why")}>{t.nav.why}</Link>
+        <Link to="/#approach" onClick={(event) => handleSectionNav(event, "approach")}>{t.nav.approach}</Link>
+        <Link to="/#group" onClick={(event) => handleSectionNav(event, "group")}>{t.nav.group}</Link>
+        <Link to="/#contact" onClick={(event) => handleSectionNav(event, "contact")}>{t.nav.contact}</Link>
+      </div>
       <main>{children}</main>
       <footer className="site-footer">
         <div className="container site-footer-main">
@@ -114,9 +147,12 @@ export default function Layout({ children }) {
             <p className="site-footer-title">{t.nav.solutions}</p>
             <div className="site-footer-links">
               <Link to="/">{t.nav.home}</Link>
+              <Link to="/#about" onClick={(event) => handleSectionNav(event, "about")}>{t.nav.about}</Link>
               <Link to="/#solutions" onClick={(event) => handleSectionNav(event, "solutions")}>{t.nav.solutions}</Link>
-              <Link to="/#ssit" onClick={(event) => handleSectionNav(event, "ssit")}>{t.nav.ssit}</Link>
+              <Link to="/#smart" onClick={(event) => handleSectionNav(event, "smart")}>{t.nav.ssit}</Link>
               <Link to="/#markets" onClick={(event) => handleSectionNav(event, "markets")}>{t.nav.markets}</Link>
+              <Link to="/#why" onClick={(event) => handleSectionNav(event, "why")}>{t.nav.why}</Link>
+              <Link to="/#approach" onClick={(event) => handleSectionNav(event, "approach")}>{t.nav.approach}</Link>
               <Link to="/#group" onClick={(event) => handleSectionNav(event, "group")}>{t.nav.group}</Link>
               <Link to="/#contact" onClick={(event) => handleSectionNav(event, "contact")}>{t.nav.contact}</Link>
             </div>
@@ -131,7 +167,7 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className="container site-footer-bottom">
-          <p>© {new Date().getFullYear()} Solaris 54. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Solaris 54. {t.common.footerRights}</p>
           <Link to="/#contact" onClick={(event) => handleSectionNav(event, "contact")}>{t.nav.cta}</Link>
         </div>
       </footer>

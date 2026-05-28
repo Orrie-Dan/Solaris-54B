@@ -1,7 +1,8 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { revealUp, staggerContainer, viewportOnce } from "../components/motion";
+import ScrollReveal from "../components/ScrollReveal";
+import { contentFade, revealUp } from "../components/motion";
 import Seo from "../components/Seo";
 import { services } from "../data";
 import { useI18n } from "../i18n";
@@ -31,13 +32,7 @@ export default function Solutions({ embedded = false, sectionId }) {
     <>
       {!embedded && <Seo title={t.solutionsPage.title} description={t.solutionsPage.description} path="/solutions" />}
       <section id={sectionId} className="section solutions-section">
-        <motion.div
-          className="container solutions-container"
-          initial={reduceMotion ? false : "hidden"}
-          whileInView={reduceMotion ? undefined : "visible"}
-          viewport={viewportOnce}
-          variants={staggerContainer}
-        >
+        <ScrollReveal className="container solutions-container">
           <motion.h2 className="solutions-heading" variants={revealUp}>{t.solutionsPage.heading}</motion.h2>
           <motion.p className="lead solutions-lead" variants={revealUp}>
             {t.solutionsPage.lead}
@@ -56,10 +51,9 @@ export default function Solutions({ embedded = false, sectionId }) {
               <motion.div
                 key={`solutions-page-${currentPage}`}
                 className="solutions-showcase"
-                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
-                transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                initial={reduceMotion ? false : contentFade.initial}
+                animate={reduceMotion ? undefined : contentFade.animate}
+                exit={reduceMotion ? undefined : contentFade.exit}
               >
                 {visibleServices.map((service, index) => (
                   <motion.article
@@ -68,12 +62,11 @@ export default function Solutions({ embedded = false, sectionId }) {
                     style={{ "--service-image": `url(${service.image})` }}
                     onMouseEnter={() => setActiveLocalIndex(index)}
                     onFocusCapture={() => setActiveLocalIndex(index)}
-                    initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                    animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    initial={reduceMotion ? false : contentFade.initial}
+                    animate={reduceMotion ? undefined : contentFade.animate}
                     transition={{
-                      duration: 0.42,
-                      ease: [0.22, 1, 0.36, 1],
-                      delay: reduceMotion ? 0 : 0.06 * index,
+                      ...contentFade.animate.transition,
+                      delay: reduceMotion ? 0 : 0.07 * index,
                     }}
                   >
                     <div className="solution-panel-media" aria-hidden="true" />
@@ -100,7 +93,7 @@ export default function Solutions({ embedded = false, sectionId }) {
               ›
             </button>
           </motion.div>
-        </motion.div>
+        </ScrollReveal>
       </section>
     </>
   );

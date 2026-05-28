@@ -1,7 +1,8 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { useEffect, useMemo, useState } from "react";
-import { revealUp, staggerContainer, viewportOnce } from "../components/motion";
+import ScrollReveal from "../components/ScrollReveal";
+import { contentFade, revealCard, revealUp, staggerContainer } from "../components/motion";
 import Seo from "../components/Seo";
 import { markets } from "../data";
 import { useI18n } from "../i18n";
@@ -9,6 +10,7 @@ import { useI18n } from "../i18n";
 const WORLD_GEOJSON_URL = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
 const MAP_VIEWBOX_WIDTH = 920;
 const MAP_VIEWBOX_HEIGHT = 500;
+const REGION_ROTATION_MS = 3000;
 
 const COUNTRY_GROUP_ALIASES = {
   "uae": ["United Arab Emirates"],
@@ -37,8 +39,14 @@ export default function Markets({ embedded = false, sectionId }) {
   const reduceMotion = useReducedMotion();
   const [selectedRegionIndex, setSelectedRegionIndex] = useState(0);
   const [hoveredRegionIndex, setHoveredRegionIndex] = useState(null);
+  const [rotationEpoch, setRotationEpoch] = useState(0);
   const [geographies, setGeographies] = useState([]);
   const [isMapLoading, setIsMapLoading] = useState(true);
+
+  function selectRegion(index) {
+    setSelectedRegionIndex(index);
+    setRotationEpoch((epoch) => epoch + 1);
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -67,6 +75,18 @@ export default function Markets({ embedded = false, sectionId }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (reduceMotion || hoveredRegionIndex !== null) {
+      return undefined;
+    }
+
+    const interval = window.setInterval(() => {
+      setSelectedRegionIndex((prev) => (prev + 1) % markets.length);
+    }, REGION_ROTATION_MS);
+
+    return () => window.clearInterval(interval);
+  }, [reduceMotion, hoveredRegionIndex, rotationEpoch]);
+
   const activeRegionIndex = hoveredRegionIndex ?? selectedRegionIndex;
   const activeMarket = markets[activeRegionIndex];
   const activeCountries = useMemo(() => parseMarketCountries(activeMarket.countries), [activeMarket]);
@@ -93,13 +113,7 @@ export default function Markets({ embedded = false, sectionId }) {
     <>
       {!embedded && <Seo title={t.marketsPage.title} description={t.marketsPage.description} path="/markets" />}
       <section id={sectionId} className="section markets-section">
-        <motion.div
-          className="container"
-          initial={reduceMotion ? false : "hidden"}
-          whileInView={reduceMotion ? undefined : "visible"}
-          viewport={viewportOnce}
-          variants={staggerContainer}
-        >
+        <ScrollReveal className="container">
           <motion.h2 variants={revealUp}>{t.marketsPage.heading}</motion.h2>
           <motion.p className="lead" variants={revealUp}>
             {t.marketsPage.lead}
@@ -110,16 +124,16 @@ export default function Markets({ embedded = false, sectionId }) {
                 <motion.article
                   key={market.region.en}
                   className={`card market-region-card ${activeRegionIndex === index ? "is-active" : ""}`}
-                  variants={revealUp}
+                  variants={revealCard}
                   onMouseEnter={() => setHoveredRegionIndex(index)}
                   onMouseLeave={() => setHoveredRegionIndex(null)}
                   onFocusCapture={() => setHoveredRegionIndex(index)}
                   onBlurCapture={() => setHoveredRegionIndex(null)}
-                  onClick={() => setSelectedRegionIndex(index)}
+                  onClick={() => selectRegion(index)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
-                      setSelectedRegionIndex(index);
+                      selectRegion(index);
                     }
                   }}
                   role="button"
@@ -137,16 +151,15 @@ export default function Markets({ embedded = false, sectionId }) {
                 <motion.div
                   key={`${activeMarket.region.en}-${lang}`}
                   className="markets-map-meta"
-                  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                  animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
-                  transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                  initial={reduceMotion ? false : contentFade.initial}
+                  animate={reduceMotion ? undefined : contentFade.animate}
+                  exit={reduceMotion ? undefined : contentFade.exit}
                 >
                   <p className="tag">{activeMarket.badge[lang]}</p>
                   <h2>{activeMarket.region[lang]}</h2>
                 </motion.div>
               </AnimatePresence>
-              <div className="markets-map-frame" aria-label={`Map highlighting ${activeMarket.region[lang]}`}>
+              <div className="markets-map-frame" aria-label={`${t.common.mapHighlightPrefix} ${activeMarket.region[lang]}`}>
                 {mapPath && geographies.length ? (
                   <svg
                     className="markets-map-svg"
@@ -167,7 +180,7 @@ export default function Markets({ embedded = false, sectionId }) {
                   </svg>
                 ) : (
                   <div className="markets-map-fallback">
-                    {isMapLoading ? "Loading map..." : "Map unavailable right now."}
+                    {isMapLoading ? t.common.loadingMap : t.common.mapUnavailable}
                   </div>
                 )}
               </div>
@@ -175,10 +188,9 @@ export default function Markets({ embedded = false, sectionId }) {
                 <motion.div
                   key={`countries-${activeMarket.region.en}-${lang}`}
                   className="markets-active-countries"
-                  initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-                  animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
-                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                  initial={reduceMotion ? false : contentFade.initial}
+                  animate={reduceMotion ? undefined : contentFade.animate}
+                  exit={reduceMotion ? undefined : contentFade.exit}
                 >
                   {activeCountries.map((country) => (
                     <span key={`${activeMarket.region.en}-${country}`}>{country}</span>
@@ -187,7 +199,7 @@ export default function Markets({ embedded = false, sectionId }) {
               </AnimatePresence>
             </motion.aside>
           </motion.div>
-        </motion.div>
+        </ScrollReveal>
       </section>
     </>
   );
