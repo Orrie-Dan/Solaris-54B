@@ -134,41 +134,22 @@ export default function Layout({ children }) {
       </div>
       <main>{children}</main>
       <footer className="site-footer">
-        <div className="container site-footer-main">
-          <div className="site-footer-brand-col">
+        <div className="container site-footer-inner">
+          <div className="site-footer-brand">
             <p className="footer-brand">
               SOLARIS <span>54</span>
             </p>
-            <p className="site-footer-lead">{t.home.eyebrow}</p>
-            <p className="site-footer-meta">{t.groupPage.description}</p>
+            <p className="site-footer-tagline">{t.footer.tagline}</p>
           </div>
-
-          <div className="site-footer-links-col">
-            <p className="site-footer-title">{t.nav.solutions}</p>
-            <div className="site-footer-links">
-              <Link to="/">{t.nav.home}</Link>
-              <Link to="/#about" onClick={(event) => handleSectionNav(event, "about")}>{t.nav.about}</Link>
-              <Link to="/#solutions" onClick={(event) => handleSectionNav(event, "solutions")}>{t.nav.solutions}</Link>
-              <Link to="/#smart" onClick={(event) => handleSectionNav(event, "smart")}>{t.nav.ssit}</Link>
-              <Link to="/#markets" onClick={(event) => handleSectionNav(event, "markets")}>{t.nav.markets}</Link>
-              <Link to="/#why" onClick={(event) => handleSectionNav(event, "why")}>{t.nav.why}</Link>
-              <Link to="/#approach" onClick={(event) => handleSectionNav(event, "approach")}>{t.nav.approach}</Link>
-              <Link to="/#group" onClick={(event) => handleSectionNav(event, "group")}>{t.nav.group}</Link>
-              <Link to="/#contact" onClick={(event) => handleSectionNav(event, "contact")}>{t.nav.contact}</Link>
-            </div>
+          <p className="site-footer-copy">
+            © {new Date().getFullYear()} Solaris 54. {t.common.footerRights}
+          </p>
+          <div className="site-footer-group">
+            <p>
+              {t.footer.subsidiary} <strong>Mark Cables FZE</strong>
+            </p>
+            <p>{t.footer.headquarters}</p>
           </div>
-
-          <div className="site-footer-contact-col">
-            <p className="site-footer-title">{t.nav.contact}</p>
-            <a href="mailto:info@solaris54.com" className="site-footer-email">
-              info@solaris54.com
-            </a>
-            <p className="site-footer-meta">{t.contactPage.lead}</p>
-          </div>
-        </div>
-        <div className="container site-footer-bottom">
-          <p>© {new Date().getFullYear()} Solaris 54. {t.common.footerRights}</p>
-          <Link to="/#contact" onClick={(event) => handleSectionNav(event, "contact")}>{t.nav.cta}</Link>
         </div>
       </footer>
     </div>

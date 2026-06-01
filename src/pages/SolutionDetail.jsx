@@ -5,6 +5,20 @@ import Seo from "../components/Seo";
 import { services } from "../data";
 import { useI18n } from "../i18n";
 
+function SsitSunIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
 export default function SolutionDetail() {
   const { slug } = useParams();
   const { lang, t } = useI18n();
@@ -26,7 +40,7 @@ export default function SolutionDetail() {
 
   return (
     <>
-      <Seo title={`${service.title[lang]} | Solaris 54`} description={service.outcome[lang]} path={`/solutions/${slug}`} />
+      <Seo title={`${service.title[lang]} | Solaris 54`} description={service.body[lang]} path={`/solutions/${slug}`} />
       <section className="section solution-detail-section">
         <motion.div
           className="container solution-detail-container"
@@ -36,15 +50,20 @@ export default function SolutionDetail() {
           variants={staggerContainer}
         >
           <motion.article
-            className="solution-detail-hero-card"
+            className={`solution-detail-hero-card${service.highlight ? " solution-detail-hero-card--highlight" : ""}`}
             variants={revealUp}
             style={{ "--service-image": `url(${service.image})` }}
           >
             <div className="solution-detail-hero-media" aria-hidden="true" />
             <div className="solution-detail-hero-overlay">
-              <p className="eyebrow">{t.common.serviceDetail}</p>
+              <p className="solution-ssit-badge solution-ssit-badge--on-dark">
+                <SsitSunIcon />
+                <span>
+                  {t.common.ssitPrefix} {service.ssit[lang]}
+                </span>
+              </p>
               <h1>{service.title[lang]}</h1>
-              <p className="lead">{service.outcome[lang]}</p>
+              <p className="lead">{service.body[lang]}</p>
               <div className="hero-actions">
                 <Link to="/contact" className="btn btn-primary">
                   {t.common.discussThisService}
@@ -56,20 +75,20 @@ export default function SolutionDetail() {
             </div>
           </motion.article>
 
-          <motion.div className="solution-detail-grid" variants={staggerContainer}>
-            <motion.article className="card solution-detail-panel" variants={revealUp}>
-              <p className="eyebrow">{t.common.ssitComponent}</p>
-              <h2>{service.ssit[lang]}</h2>
-              <p className="meta">{service.clients[lang]}</p>
-            </motion.article>
-            <motion.article className="card solution-detail-panel" variants={revealUp}>
-              <p className="eyebrow">{t.common.includes}</p>
-              <ul className="solution-detail-list">
-                {service.deliverables[lang].map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </motion.article>
+          <motion.div className="solution-detail-body" variants={revealUp}>
+            <div className="solution-detail-tags">
+              {service.tags[lang].map((tag) => (
+                <span key={tag} className="solution-detail-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h2 className="solution-detail-bullets-title">{t.common.includes}</h2>
+            <ul className="solution-detail-bullets">
+              {service.bullets[lang].map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </motion.div>
         </motion.div>
       </section>

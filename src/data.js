@@ -1,114 +1,204 @@
+const solutionImages = {
+  "rural-electrification":
+    "/solutions/Wide-angle_documentary-style_photograph_of_a_202606011215.jpeg",
+  "mini-grid-development":
+    "/solutions/Large-scale_solar_mini-grid_installation_serving_202606011217.jpeg",
+  "ev-fast-charging":
+    "/solutions/Modern_electric_vehicle_fast_charging_202606011218.jpeg",
+  "ci-energy-solutions":
+    "/solutions/Massive_warehouse_and_industrial_park_202606011221.jpeg",
+  "off-grid-green-energy":
+    "/solutions/Remote_off-grid_renewable_energy_installation_202606011225.jpeg",
+  "vpp-virtual-power-plants":
+    "/solutions/vpp.jpeg",
+};
+
+const solutionImage = (slug) => solutionImages[slug] ?? `/solutions/${slug}.jpg`;
+
 export const services = [
   {
-    slug: "ci-rooftop-solar",
-    image: "/Rooftop.jpg",
-    title: { en: "C&I Rooftop Solar", fr: "Solaire Toiture C&I" },
-    outcome: {
-      en: "Lower grid dependence and energy cost for industrial assets.",
-      fr: "Reduction de la dependance reseau et des couts energetiques industriels.",
+    slug: "rural-electrification",
+    image: solutionImage("rural-electrification"),
+    title: { en: "Rural Electrification", fr: "Électrification Rurale" },
+    body: {
+      en: "Affordable Solar Home Systems (SHS) with smart PayGo financing to bring clean, reliable power to households, schools, health clinics, and small businesses in off-grid communities.",
+      fr: "Systèmes Solaires Domestiques (SHS) abordables avec financement PayGo intelligent pour apporter une énergie propre et fiable aux ménages, écoles, cliniques et petites entreprises hors réseau.",
     },
-    ssit: { en: "Smart Monitoring Platform", fr: "Plateforme de supervision intelligente" },
-    deliverables: {
-      en: ["Grid-connected PV", "Net metering", "PPA and zero-CAPEX options"],
-      fr: ["PV connecte reseau", "Net metering", "Options PPA et zero-CAPEX"],
+    ssit: { en: "IoT PayGo Monitoring", fr: "Surveillance IoT PayGo" },
+    tags: {
+      en: ["Solar Home Systems", "PayGo Financing", "Off-Grid", "Community Power"],
+      fr: ["Systèmes solaires domestiques", "Financement PayGo", "Hors réseau", "Énergie communautaire"],
     },
-    clients: {
-      en: "Manufacturing, logistics, warehouses, commercial complexes",
-      fr: "Industrie, logistique, entrepots, complexes commerciaux",
-    },
-  },
-  {
-    slug: "hybrid-mini-grids",
-    image: "/MiniGrid.jpg",
-    title: { en: "Hybrid Mini-Grids", fr: "Mini-reseaux hybrides" },
-    outcome: {
-      en: "Resilient decentralized energy for remote and high-risk sites.",
-      fr: "Energie decentralisee resiliente pour sites eloignes et critiques.",
-    },
-    ssit: { en: "Smart Energy Management System", fr: "Systeme intelligent de gestion d'energie" },
-    deliverables: {
-      en: ["Solar PV + BESS + diesel optimization", "Controller integration", "Remote performance visibility"],
-      fr: ["PV solaire + BESS + optimisation diesel", "Integration des controleurs", "Visibilite de performance a distance"],
-    },
-    clients: {
-      en: "Communities, mining, islands, industrial clusters",
-      fr: "Communautes, mines, iles, clusters industriels",
+    bullets: {
+      en: [
+        "Affordable Solar Home Systems (SHS) for every household",
+        "Smart prepay solutions and PayGo via mobile money",
+        "Battery storage and intelligent monitoring",
+        "Productive applications — farming, commerce, education",
+        "Community electrification programmes at national scale",
+      ],
+      fr: [
+        "Systèmes solaires domestiques (SHS) abordables pour chaque ménage",
+        "Solutions de prépaiement intelligent et PayGo via mobile money",
+        "Stockage par batterie et surveillance intelligente",
+        "Applications productives — agriculture, commerce, éducation",
+        "Programmes d'électrification communautaire à l'échelle nationale",
+      ],
     },
   },
   {
-    slug: "smart-buildings",
-    image: "/SmartBuildings.jpg",
-    title: { en: "Industrial & Commercial Smart Buildings", fr: "Batiments intelligents C&I" },
-    outcome: {
-      en: "Improve efficiency, ESG reporting, and operating performance.",
-      fr: "Ameliorer l'efficacite, le reporting ESG et la performance operationnelle.",
+    slug: "mini-grid-development",
+    image: solutionImage("mini-grid-development"),
+    title: { en: "Mini-Grid Development", fr: "Développement de Mini-Réseaux" },
+    body: {
+      en: "Scalable solar-battery mini-grid systems delivering reliable, affordable electricity to communities, schools, health centres, and businesses — from 50kW village systems to 250kW+ industrial grids.",
+      fr: "Systèmes mini-réseaux solaires-batteries évolutifs fournissant une électricité fiable et abordable aux communautés, écoles, centres de santé et entreprises — de 50kW à 250kW+ industriel.",
     },
-    ssit: { en: "AI-Driven Energy Optimisation", fr: "Optimisation energetique pilotee par IA" },
-    deliverables: {
-      en: ["BEMS and metering", "EV charging and HVAC automation", "Solar + storage integration"],
-      fr: ["BEMS et comptage intelligent", "Recharge VE et automatisation CVC", "Integration solaire + stockage"],
+    ssit: { en: "Smart Energy Management System", fr: "Système intelligent de gestion d'énergie" },
+    tags: {
+      en: ["Solar PV + BESS", "Hybrid Solar-Diesel", "Smart EMS", "Containerised"],
+      fr: ["PV solaire + BESS", "Hybride solaire-diesel", "EMS intelligent", "Conteneurisé"],
     },
-    clients: { en: "Industrial parks, campuses, commercial real estate", fr: "Parcs industriels, campus, immobilier commercial" },
+    bullets: {
+      en: [
+        "Solar PV + Battery Energy Storage Systems (BESS)",
+        "Hybrid solar-diesel mini-grids for 24/7 reliability",
+        "Intelligent Energy Management Systems (EMS)",
+        "Containerised and modular — deployable anywhere",
+        "Power distribution systems for communities and productive use",
+      ],
+      fr: [
+        "PV solaire + systèmes de stockage par batterie (BESS)",
+        "Mini-réseaux hybrides solaire-diesel pour une fiabilité 24h/24",
+        "Systèmes intelligents de gestion d'énergie (EMS)",
+        "Conteneurisés et modulaires — déployables partout",
+        "Systèmes de distribution pour communautés et usage productif",
+      ],
+    },
   },
   {
-    slug: "data-centre-energy",
-    image: "/Data center.jpg",
-    title: { en: "Data Centre Energy Infrastructure", fr: "Infrastructure energetique data centre" },
-    outcome: {
-      en: "Deliver high-availability energy architecture for digital growth.",
-      fr: "Fournir une architecture energetique haute disponibilite pour la croissance numerique.",
+    slug: "ev-fast-charging",
+    image: solutionImage("ev-fast-charging"),
+    title: { en: "EV Fast Charging Infrastructure", fr: "Infrastructure de Recharge Rapide VE" },
+    body: {
+      en: "Solar-integrated ultra-fast DC charging stations for highway corridors and urban networks. Fleet charging solutions for commercial operators, intelligent payment systems, and battery storage integration for 24/7 availability.",
+      fr: "Bornes de recharge rapide DC intégrées au solaire pour corridors routiers et réseaux urbains. Solutions de recharge de flotte, systèmes de paiement intelligents et stockage par batterie pour une disponibilité 24h/24.",
     },
-    ssit: { en: "Smart Grid Synchronisation", fr: "Synchronisation reseau intelligente" },
-    deliverables: {
-      en: ["Dedicated solar plants", "Grid synchronization", "Backup redundancy architecture"],
-      fr: ["Centrales solaires dediees", "Synchronisation reseau", "Architecture de redondance de secours"],
+    ssit: { en: "Smart Payment & Energy Management", fr: "Paiement intelligent et gestion d'énergie" },
+    tags: {
+      en: ["Ultra-Fast DC", "Solar-Integrated", "Fleet Charging", "Smart Payment"],
+      fr: ["DC ultra-rapide", "Intégré solaire", "Recharge de flotte", "Paiement intelligent"],
     },
-    clients: { en: "Telecom operators, cloud, AI infrastructure, enterprise data centres", fr: "Operateurs telecom, cloud, IA, data centres entreprise" },
+    bullets: {
+      en: [
+        "Ultra-fast DC charging stations on highways and in cities",
+        "Highway and urban charging networks",
+        "Solar-integrated charging stations — reduced operating costs",
+        "Intelligent payment systems and energy management",
+        "Fleet charging solutions for commercial and logistics operators",
+      ],
+      fr: [
+        "Bornes de recharge DC ultra-rapide sur autoroutes et en ville",
+        "Réseaux de recharge autoroutiers et urbains",
+        "Bornes intégrées au solaire — coûts d'exploitation réduits",
+        "Systèmes de paiement intelligents et gestion d'énergie",
+        "Solutions de recharge de flotte pour opérateurs commerciaux et logistiques",
+      ],
+    },
   },
   {
-    slug: "telecom-solar-bess",
-    image: "/Tower.jpg",
-    title: { en: "Solar + BESS for Telecom Towers", fr: "Solaire + BESS pour tours telecom" },
-    outcome: {
-      en: "Reduce diesel use while increasing network uptime.",
-      fr: "Reduire le diesel tout en augmentant la disponibilite reseau.",
+    slug: "ci-energy-solutions",
+    image: solutionImage("ci-energy-solutions"),
+    title: {
+      en: "Commercial & Industrial (C&I) Energy Solutions",
+      fr: "Solutions Énergétiques Commerciales & Industrielles (C&I)",
     },
-    ssit: { en: "Intelligent Hybrid Controllers", fr: "Controleurs hybrides intelligents" },
-    deliverables: {
-      en: ["Solar arrays + lithium-ion BESS", "Hybrid control", "Remote monitoring and analytics"],
-      fr: ["Champs solaires + BESS lithium-ion", "Controle hybride", "Supervision distante et analytique"],
+    body: {
+      en: "Comprehensive solar and storage solutions for factories, warehouses, commercial complexes, and industrial parks. Rooftop PV, BESS, hybrid power, EMS optimisation, peak shaving, and critical backup — reducing energy costs and improving ESG performance.",
+      fr: "Solutions solaires et de stockage complètes pour usines, entrepôts, complexes commerciaux et parcs industriels. PV toiture, BESS, énergie hybride, optimisation EMS, écrêtage des pointes et alimentation de secours critique.",
     },
-    clients: { en: "Mobile operators and tower companies", fr: "Operateurs mobiles et tower companies" },
+    ssit: { en: "AI-Driven Energy Optimisation", fr: "Optimisation énergétique pilotée par IA" },
+    tags: {
+      en: ["Rooftop Solar PV", "BESS", "Peak Shaving", "ESG Compliance"],
+      fr: ["PV toiture", "BESS", "Écrêtage des pointes", "Conformité ESG"],
+    },
+    bullets: {
+      en: [
+        "Rooftop solar PV systems for manufacturing and commercial use",
+        "Battery Energy Storage Systems (BESS) for energy independence",
+        "Energy and EMS optimisation — reduce bills significantly",
+        "Peak shaving, cost reduction and demand management",
+        "Critical backup power systems for zero-downtime operations",
+      ],
+      fr: [
+        "Systèmes PV toiture pour l'industrie et le commerce",
+        "Systèmes de stockage par batterie (BESS) pour l'indépendance énergétique",
+        "Optimisation énergétique et EMS — réduction significative des factures",
+        "Écrêtage des pointes, réduction des coûts et gestion de la demande",
+        "Systèmes d'alimentation de secours critique pour zéro interruption",
+      ],
+    },
   },
   {
-    slug: "agro-solar",
-    image: "/Agri.jpg",
-    title: { en: "Agro-Solar Projects", fr: "Projets agro-solaires" },
-    outcome: {
-      en: "Increase agricultural productivity with clean, reliable energy.",
-      fr: "Augmenter la productivite agricole avec une energie propre et fiable.",
+    slug: "off-grid-green-energy",
+    image: solutionImage("off-grid-green-energy"),
+    title: { en: "Off-Grid Green Energy Solutions", fr: "Solutions d'Énergie Verte Hors-Réseau" },
+    body: {
+      en: "Utility-scale and containerised off-grid energy solutions for remote industrial sites, telecom networks, water and agriculture infrastructure, and emergency relief — enabling energy independence in even the most isolated environments.",
+      fr: "Solutions d'énergie hors-réseau à l'échelle utilitaire et conteneurisées pour sites industriels éloignés, réseaux télécom, infrastructures eau et agriculture, et secours d'urgence.",
     },
-    ssit: { en: "IoT Water & Energy Monitoring", fr: "Supervision IoT eau et energie" },
-    deliverables: {
-      en: ["Solar irrigation", "Cold-chain and agro-processing support", "Water pumping systems"],
-      fr: ["Irrigation solaire", "Soutien chaine du froid et agro-transformation", "Systemes de pompage d'eau"],
+    ssit: { en: "Remote Monitoring & VPP Integration", fr: "Surveillance à distance et intégration VPP" },
+    tags: {
+      en: ["Utility-Scale Solar", "Containerised", "Water & Agriculture", "Emergency Relief"],
+      fr: ["Solaire utilitaire", "Conteneurisé", "Eau et agriculture", "Secours d'urgence"],
     },
-    clients: { en: "Agri-industrial operators and farming cooperatives", fr: "Acteurs agro-industriels et cooperatives agricoles" },
+    bullets: {
+      en: [
+        "Utility-scale solar and storage solutions for large off-grid sites",
+        "Mobile and containerised systems — deploy anywhere, fast",
+        "Energy for telecom towers and digital infrastructure",
+        "Water and agriculture energy solutions",
+        "Micro-grids and integration with Virtual Power Plants (VPP)",
+      ],
+      fr: [
+        "Solutions solaires et de stockage utilitaires pour grands sites hors réseau",
+        "Systèmes mobiles et conteneurisés — déploiement rapide partout",
+        "Énergie pour tours télécom et infrastructure numérique",
+        "Solutions énergétiques pour l'eau et l'agriculture",
+        "Micro-réseaux et intégration aux centrales virtuelles (VPP)",
+      ],
+    },
   },
   {
-    slug: "rural-electrification-shs",
-    image: "/RuralElectrification.jpg",
-    title: { en: "Rural Electrification & Solar Home Systems", fr: "Electrification rurale et systemes solaires domestiques" },
-    outcome: {
-      en: "Scale energy access for underserved and off-grid communities.",
-      fr: "Etendre l'acces a l'energie pour les communautes sous-desservies et hors-reseau.",
+    slug: "vpp-virtual-power-plants",
+    image: solutionImage("vpp-virtual-power-plants"),
+    highlight: true,
+    title: { en: "VPP — Virtual Power Plants", fr: "VPP — Centrales Virtuelles" },
+    body: {
+      en: "Virtual Power Plants connect distributed energy resources — solar, storage, and generation — to balance supply and demand, enhance grid stability, and unlock new value. Smart energy management and grid integration at scale.",
+      fr: "Les Centrales Virtuelles connectent les ressources énergétiques distribuées — solaire, stockage et production — pour équilibrer l'offre et la demande, améliorer la stabilité du réseau et créer de la valeur.",
     },
-    ssit: { en: "IoT PayGo Monitoring", fr: "Supervision IoT PayGo" },
-    deliverables: {
-      en: ["SHS and mini-grids", "Institutional electrification", "PayGo-enabled scale deployment"],
-      fr: ["SHS et mini-reseaux", "Electrification institutionnelle", "Deploiement a echelle avec PayGo"],
+    ssit: { en: "Smart Grid & Demand Response", fr: "Réseau intelligent et réponse à la demande" },
+    tags: {
+      en: ["Grid Integration", "Demand Response", "Grid Stability", "Smart Energy Mgmt"],
+      fr: ["Intégration réseau", "Réponse à la demande", "Stabilité réseau", "Gestion énergétique intelligente"],
     },
-    clients: { en: "Public programs, schools, clinics, SMEs", fr: "Programmes publics, ecoles, cliniques, PME" },
+    bullets: {
+      en: [
+        "Connects distributed solar, storage, and generation assets",
+        "Balances supply and demand at grid scale",
+        "Enhances grid stability and frequency regulation",
+        "Unlocks new revenue from distributed energy assets",
+        "Supports national grid modernisation programmes",
+      ],
+      fr: [
+        "Connecte les actifs solaires, de stockage et de production distribués",
+        "Équilibre l'offre et la demande à l'échelle du réseau",
+        "Améliore la stabilité du réseau et la régulation de fréquence",
+        "Crée de nouvelles revenus à partir d'actifs énergétiques distribués",
+        "Soutient les programmes de modernisation des réseaux nationaux",
+      ],
+    },
   },
 ];
 

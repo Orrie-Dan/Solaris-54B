@@ -3,10 +3,11 @@ import { useState } from "react";
 import ScrollReveal from "../components/ScrollReveal";
 import { revealCard, revealUp } from "../components/motion";
 import Seo from "../components/Seo";
+import CountrySelect from "../components/CountrySelect";
 import { useI18n } from "../i18n";
 
 export default function Contact({ embedded = false, sectionId }) {
-  const { t } = useI18n();
+  const { lang, t } = useI18n();
   const [status, setStatus] = useState("");
 
   async function handleSubmit(event) {
@@ -67,7 +68,12 @@ export default function Contact({ embedded = false, sectionId }) {
             <input name="lastName" placeholder={t.contactPage.placeholders.lastName} required />
             <input name="organisation" placeholder={t.contactPage.placeholders.organisation} required />
             <input name="email" type="email" placeholder={t.contactPage.placeholders.email} required />
-            <input name="country" placeholder={t.contactPage.placeholders.country} required />
+            <CountrySelect
+              lang={lang}
+              placeholder={t.contactPage.placeholders.country}
+              priorityLabel={t.contactPage.countryPriorityLabel}
+              allLabel={t.contactPage.countryAllLabel}
+            />
             <select name="interest" defaultValue="" required>
               <option value="" disabled>
                 {t.contactPage.placeholders.interest}
