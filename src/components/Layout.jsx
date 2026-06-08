@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { MobileNavDropdown, NavDropdown } from "./NavDropdown";
 import { useI18n } from "../i18n";
+import { getNavDropdowns } from "../navConfig";
 
 function LanguageToggle() {
   const { lang, setLang, t } = useI18n();
@@ -18,9 +20,10 @@ function LanguageToggle() {
 }
 
 export default function Layout({ children }) {
-  const { t } = useI18n();
+  const { lang, t } = useI18n();
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navDropdowns = useMemo(() => getNavDropdowns(lang, t), [lang, t]);
   const reduceMotion = useReducedMotion();
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,6 +58,10 @@ export default function Layout({ children }) {
     setMenuOpen(false);
     navigate("/");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function closeMenu() {
+    setMenuOpen(false);
   }
 
   useEffect(() => {
@@ -103,9 +110,15 @@ export default function Layout({ children }) {
         <nav className="nav-links" aria-label={t.common.navMainAria}>
           <Link to="/" onClick={handleHomeNav}>{t.nav.home}</Link>
           <Link to="/#about" onClick={(event) => handleSectionNav(event, "about")}>{t.nav.about}</Link>
-          <Link to="/#solutions" onClick={(event) => handleSectionNav(event, "solutions")}>{t.nav.solutions}</Link>
-          <Link to="/#smart" onClick={(event) => handleSectionNav(event, "smart")}>{t.nav.ssit}</Link>
-          <Link to="/#markets" onClick={(event) => handleSectionNav(event, "markets")}>{t.nav.markets}</Link>
+          {navDropdowns.map((dropdown) => (
+            <NavDropdown
+              key={dropdown.id}
+              label={dropdown.label}
+              href={dropdown.href}
+              items={dropdown.items}
+              onItemClick={closeMenu}
+            />
+          ))}
           <Link to="/#why" onClick={(event) => handleSectionNav(event, "why")}>{t.nav.why}</Link>
           <Link to="/#approach" onClick={(event) => handleSectionNav(event, "approach")}>{t.nav.approach}</Link>
           <Link to="/#group" onClick={(event) => handleSectionNav(event, "group")}>{t.nav.group}</Link>
@@ -124,9 +137,14 @@ export default function Layout({ children }) {
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <Link to="/" onClick={handleHomeNav}>{t.nav.home}</Link>
         <Link to="/#about" onClick={(event) => handleSectionNav(event, "about")}>{t.nav.about}</Link>
-        <Link to="/#solutions" onClick={(event) => handleSectionNav(event, "solutions")}>{t.nav.solutions}</Link>
-        <Link to="/#smart" onClick={(event) => handleSectionNav(event, "smart")}>{t.nav.ssit}</Link>
-        <Link to="/#markets" onClick={(event) => handleSectionNav(event, "markets")}>{t.nav.markets}</Link>
+        {navDropdowns.map((dropdown) => (
+          <MobileNavDropdown
+            key={dropdown.id}
+            label={dropdown.label}
+            items={dropdown.items}
+            onItemClick={closeMenu}
+          />
+        ))}
         <Link to="/#why" onClick={(event) => handleSectionNav(event, "why")}>{t.nav.why}</Link>
         <Link to="/#approach" onClick={(event) => handleSectionNav(event, "approach")}>{t.nav.approach}</Link>
         <Link to="/#group" onClick={(event) => handleSectionNav(event, "group")}>{t.nav.group}</Link>

@@ -1,11 +1,13 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import { contentFade, revealCard, revealUp, staggerContainer } from "../components/motion";
 import Seo from "../components/Seo";
 import { markets } from "../data";
 import { useI18n } from "../i18n";
+import { getMarketRegionSlug } from "../navConfig";
 
 const WORLD_GEOJSON_URL = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
 const MAP_VIEWBOX_WIDTH = 920;
@@ -36,6 +38,7 @@ function parseMarketCountries(countries) {
 
 export default function Markets({ embedded = false, sectionId }) {
   const { lang, t } = useI18n();
+  const location = useLocation();
   const reduceMotion = useReducedMotion();
   const [selectedRegionIndex, setSelectedRegionIndex] = useState(0);
   const [hoveredRegionIndex, setHoveredRegionIndex] = useState(null);
@@ -74,6 +77,17 @@ export default function Markets({ embedded = false, sectionId }) {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!location.hash.startsWith("#region-")) {
+      return;
+    }
+    const regionSlug = location.hash.replace("#region-", "");
+    const regionIndex = markets.findIndex((market) => getMarketRegionSlug(market) === regionSlug);
+    if (regionIndex >= 0) {
+      selectRegion(regionIndex);
+    }
+  }, [location.hash]);
 
   useEffect(() => {
     if (reduceMotion || hoveredRegionIndex !== null) {
