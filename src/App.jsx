@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Markets from "./pages/Markets";
 import NotFound from "./pages/NotFound";
 import SolutionDetail from "./pages/SolutionDetail";
+import SolutionProductDetail from "./pages/SolutionProductDetail";
 import Solutions from "./pages/Solutions";
 import SSIT from "./pages/SSIT";
 
@@ -29,6 +30,7 @@ function App() {
           <Routes location={location}>
             <Route path="/" element={<Home />} />
             <Route path="/solutions" element={<Solutions />} />
+            <Route path="/solutions/:slug/:productId" element={<SolutionProductDetail />} />
             <Route path="/solutions/:slug" element={<SolutionDetail />} />
             <Route path="/ssit" element={<SSIT />} />
             <Route path="/markets" element={<Markets />} />

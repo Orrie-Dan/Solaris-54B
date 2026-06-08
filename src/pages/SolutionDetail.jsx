@@ -2,7 +2,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 import { revealUp, staggerContainer, viewportOnce } from "../components/motion";
 import Seo from "../components/Seo";
-import { services } from "../data";
+import SolutionProductCatalog from "../components/SolutionProductCatalog";
+import SolutionUseCases from "../components/SolutionUseCases";
+import { getServiceBySlug } from "../data";
 import { useI18n } from "../i18n";
 
 function SsitSunIcon() {
@@ -23,7 +25,7 @@ export default function SolutionDetail() {
   const { slug } = useParams();
   const { lang, t } = useI18n();
   const reduceMotion = useReducedMotion();
-  const service = services.find((item) => item.slug === slug);
+  const service = getServiceBySlug(slug);
 
   if (!service) {
     return (
@@ -37,6 +39,8 @@ export default function SolutionDetail() {
       </section>
     );
   }
+
+  const hasCatalog = Boolean(service.catalog);
 
   return (
     <>
@@ -76,19 +80,62 @@ export default function SolutionDetail() {
           </motion.article>
 
           <motion.div className="solution-detail-body" variants={revealUp}>
-            <div className="solution-detail-tags">
-              {service.tags[lang].map((tag) => (
-                <span key={tag} className="solution-detail-tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <h2 className="solution-detail-bullets-title">{t.common.includes}</h2>
-            <ul className="solution-detail-bullets">
-              {service.bullets[lang].map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+            {hasCatalog ? (
+              <>
+                <section className="solution-detail-block">
+                  <p className="eyebrow solution-detail-eyebrow">{t.common.solutionOverview}</p>
+                  <h2 className="solution-detail-block-title">{t.common.whatWeDeliver}</h2>
+                  <div className="solution-detail-tags">
+                    {service.tags[lang].map((tag) => (
+                      <span key={tag} className="solution-detail-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <ul className="solution-detail-bullets">
+                    {service.bullets[lang].map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
+
+                <section className="solution-detail-block">
+                  <p className="eyebrow solution-detail-eyebrow">{t.common.impact}</p>
+                  <h2 className="solution-detail-block-title">{t.common.problemsWeSolve}</h2>
+                  <SolutionUseCases useCases={service.catalog.useCases} />
+                </section>
+
+                <section className="solution-detail-block">
+                  <p className="eyebrow solution-detail-eyebrow">{t.common.productCatalog}</p>
+                  <h2 className="solution-detail-block-title">{t.common.ourProductRange}</h2>
+                  <SolutionProductCatalog catalog={service.catalog} solutionSlug={slug} />
+                </section>
+
+                <div className="solution-detail-cta-band">
+                  <h3>{t.common.catalogCtaTitle}</h3>
+                  <p className="meta">{t.common.catalogCtaLead}</p>
+                  <Link className="btn btn-primary" to="/contact">
+                    {t.common.discussThisService}
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="solution-detail-tags">
+                  {service.tags[lang].map((tag) => (
+                    <span key={tag} className="solution-detail-tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h2 className="solution-detail-bullets-title">{t.common.includes}</h2>
+                <ul className="solution-detail-bullets">
+                  {service.bullets[lang].map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </>
+            )}
           </motion.div>
         </motion.div>
       </section>
